@@ -67,7 +67,9 @@ $(top_srcdir)/src/tests/*/*.vtc:
 
 check: $(VMOD_TESTS)
 
-EXTRA_DIST = foreign *vcc $(VMOD_TESTS) \
+EXTRA_DIST = foreign \
+	$(top_srcdir)/src/*vcc \
+	$(VMOD_TESTS) \
 	vtree.h
 
 CLEANFILES = $(builddir)/vcc*if.c $(builddir)/vcc*if.h \
