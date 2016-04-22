@@ -1,3 +1,13 @@
+THIS BRANCH TRACKS VARNISH MASTER!
+==================================
+
+While the master branch of the original Varnish Software Repo
+https://github.com/varnish/varnish-modules tracks some release (4.1 at
+the time of writing), the master branch of this repository acutally
+tracks the master branch of
+https://github.com/varnishcache/varnish-cache
+
+
 Varnish module collection by Varnish Software
 =============================================
 
@@ -16,18 +26,8 @@ Included:
 This collection contains the following vmods (previously kept individually):
 cookie, vsthrottle, header, saintmode, softpurge, tcp, var, xkey
 
-Supported Varnish version is described in the `CHANGES.rst` file. Normally this
-is the last public Varnish Cache release. See PORTING below for information on
-support for other versions of Varnish.
-
-
 Installation
 ------------
-
-Source releases can be downloaded from:
-
-    https://download.varnish-software.com/varnish-modules/
-
 
 Installation requires an installed version of Varnish Cache, including the
 development files.
@@ -67,20 +67,7 @@ separate documents in `docs/`. For completeness, here is a snippet from
 Development
 -----------
 
-The source git tree lives on Github: https://github.com/varnish/varnish-modules
-
-All source code is placed in the master git branch. Pull requests and issue
-reporting are appreciated.
-
-Porting
--------
-
-We encourage porting of the module package to other versions of Varnish Cache.
-
-Nils Goroll has a git tree adopted to Varnish git master, which can be found
-on: https://github.com/nigoroll/varnish-modules/
-
-
+The source git tree lives on Github: https://github.com/nigoroll/varnish-modules
 
 Administrativa
 --------------
@@ -105,9 +92,9 @@ maintenance requirements will be important in this decision.
 Contact
 -------
 
-This code is maintained by Varnish Software. (https://www.varnish-software.com/)
+This code is maintained by UPLEX based on the work of Varnish Software
+- see https://github.com/varnish/varnish-modules
 
 Issues can be reported via the Github issue tracker.
 
-Other inquires can be sent to opensource@__no_spam_please__varnish-software.com.
-
+Other inquires can be sent to varnish dash support @__not_for_robots___uplex.de
