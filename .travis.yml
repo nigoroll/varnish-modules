@@ -11,10 +11,10 @@ before_install:
 before_script:
   - ./bootstrap
   - ./configure --prefix=/usr
-  - make
+  - make -j4
 
 script:
-  - make check -j4
+  - make distcheck -j4
 
 compiler:
   - clang
