@@ -43,7 +43,7 @@ Source code is built with autotools::
 
 
 The resulting loadable modules (``libvmod_foo*.so`` files) will be installed to
-the Varnish module directory. (default `/var/lib/varnish/vmods/`)
+the Varnish module directory. (default `/usr/lib/varnish/vmods/`)
 
 
 Usage
