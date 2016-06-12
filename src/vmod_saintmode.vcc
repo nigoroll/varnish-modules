@@ -4,5 +4,5 @@ $Module saintmode 3 Saintmode director
 # See README.rst for documentation
 
 $Function VOID blacklist(PRIV_VCL, DURATION expires)
-$Object saintmode(PRIV_VCL, BACKEND backend, INT threshold)
+$Object saintmode(PRIV_VCL, BACKEND backend, INT threshold=0)
 $Method BACKEND .backend()
