@@ -1,4 +1,28 @@
-$Module saintmode 3 Saint mode backend director
+..
+.. NB:  This file is machine generated, DO NOT EDIT!
+..
+.. Edit vmod.vcc and run make instead
+..
+
+.. role:: ref(emphasis)
+
+.. _vmod_saintmode(3):
+
+==============
+vmod_saintmode
+==============
+
+---------------------------
+Saint mode backend director
+---------------------------
+
+:Manual section: 3
+
+SYNOPSIS
+========
+
+import saintmode [from "path"] ;
+
 
 DESCRIPTION
 ===========
@@ -56,7 +80,20 @@ Example::
     }
 
 
-$Function VOID blacklist(PRIV_VCL, DURATION expires)
+CONTENTS
+========
+
+* :ref:`func_blacklist`
+* :ref:`obj_saintmode`
+* :ref:`func_saintmode.backend`
+
+.. _func_blacklist:
+
+VOID blacklist(PRIV_VCL, DURATION)
+----------------------------------
+
+Prototype
+	VOID blacklist(PRIV_VCL, DURATION expires)
 
 Marks the backend as sick for a specific object. Used in vcl_backend_response.
 Corresponds to the use of ``beresp.saintmode`` in Varnish 3.0. Only available
@@ -73,7 +110,11 @@ Example::
 
 
 
-$Object saintmode(PRIV_VCL, BACKEND backend, INT threshold=0)
+.. _obj_saintmode:
+
+Object saintmode
+================
+
 
 Constructs a saintmode director object. The ``threshold`` argument sets
 the saintmode threshold, which is the maximum number of items that can be
@@ -87,7 +128,13 @@ Example::
         }
 
 
-$Method BACKEND .backend()
+.. _func_saintmode.backend:
+
+BACKEND saintmode.backend()
+---------------------------
+
+Prototype
+	BACKEND saintmode.backend()
 
 Used for assigning the backend from the saintmode object.
 
