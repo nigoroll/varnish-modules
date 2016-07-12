@@ -1,4 +1,28 @@
-$Module xkey 3 Surrogate keys support for Varnish Cache
+..
+.. NB:  This file is machine generated, DO NOT EDIT!
+..
+.. Edit vmod.vcc and run make instead
+..
+
+.. role:: ref(emphasis)
+
+.. _vmod_xkey(3):
+
+=========
+vmod_xkey
+=========
+
+----------------------------------------
+Surrogate keys support for Varnish Cache
+----------------------------------------
+
+:Manual section: 3
+
+SYNOPSIS
+========
+
+import xkey [from "path"] ;
+
 DESCRIPTION
 ===========
 
@@ -87,16 +111,32 @@ Varnish will find the objects and clear them out, responding with::
 
 The objects are now cleared.
 
-$Event vmod_event
+CONTENTS
+========
 
-$Function INT purge(STRING key)
+* :ref:`func_purge`
+* :ref:`func_softpurge`
+
+.. _func_purge:
+
+INT purge(STRING)
+-----------------
+
+Prototype
+	INT purge(STRING key)
 
 Description
     Purges all objects hashed on `key`. Returns the number of objects that were
     purged.
 
 
-$Function INT softpurge(STRING key)
+.. _func_softpurge:
+
+INT softpurge(STRING)
+---------------------
+
+Prototype
+	INT softpurge(STRING key)
 
 Description
 	Performs a "soft purge" for all objects hashed on `key`.
