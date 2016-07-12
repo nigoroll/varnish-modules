@@ -1,4 +1,28 @@
-$Module cookie 3 Varnish Cookie Module
+..
+.. NB:  This file is machine generated, DO NOT EDIT!
+..
+.. Edit vmod.vcc and run make instead
+..
+
+.. role:: ref(emphasis)
+
+.. _vmod_cookie(3):
+
+===========
+vmod_cookie
+===========
+
+---------------------
+Varnish Cookie Module
+---------------------
+
+:Manual section: 3
+
+SYNOPSIS
+========
+
+import cookie [from "path"] ;
+
 DESCRIPTION
 ===========
 
@@ -43,7 +67,26 @@ Filtering example::
     }
 
 
-$Function VOID clean(PRIV_TASK)
+CONTENTS
+========
+
+* :ref:`func_clean`
+* :ref:`func_delete`
+* :ref:`func_filter_except`
+* :ref:`func_format_rfc1123`
+* :ref:`func_get`
+* :ref:`func_get_string`
+* :ref:`func_isset`
+* :ref:`func_parse`
+* :ref:`func_set`
+
+.. _func_clean:
+
+VOID clean(PRIV_TASK)
+---------------------
+
+Prototype
+	VOID clean(PRIV_TASK)
 
 Description
         Clean up previously parsed cookies. It is not necessary to run clean()
@@ -55,7 +98,13 @@ Example
                         cookie.clean();
                 }
 
-$Function VOID delete(PRIV_TASK, STRING cookiename)
+.. _func_delete:
+
+VOID delete(PRIV_TASK, STRING)
+------------------------------
+
+Prototype
+	VOID delete(PRIV_TASK, STRING cookiename)
 
 Description
         Delete `cookiename` from internal vmod storage if it exists.
@@ -69,7 +118,13 @@ Example
 		    // get_string() will now yield "cookie1: value1";
 		}
 
-$Function VOID filter_except(PRIV_TASK, STRING filterstring)
+.. _func_filter_except:
+
+VOID filter_except(PRIV_TASK, STRING)
+-------------------------------------
+
+Prototype
+	VOID filter_except(PRIV_TASK, STRING filterstring)
 
 Description
         Delete all cookies from internal vmod storage that is not in the
@@ -84,7 +139,13 @@ Example
                         // "cookie1: value1; cookie2: value2;";
                 }
 
-$Function STRING format_rfc1123(TIME now, DURATION timedelta)
+.. _func_format_rfc1123:
+
+STRING format_rfc1123(TIME, DURATION)
+-------------------------------------
+
+Prototype
+	STRING format_rfc1123(TIME now, DURATION timedelta)
 
 Description
         Get a RFC1123 formatted date string suitable for inclusion in a
@@ -100,7 +161,13 @@ Example
                         set resp.http.Set-Cookie = "userid=" + req.http.userid + "; Expires=" + cookie.format_rfc1123(now, 5m) + "; httpOnly";
                 }
 
-$Function STRING get(PRIV_TASK, STRING cookiename)
+.. _func_get:
+
+STRING get(PRIV_TASK, STRING)
+-----------------------------
+
+Prototype
+	STRING get(PRIV_TASK, STRING cookiename)
 
 Description
         Get the value of `cookiename`, as stored in internal vmod storage. If `cookiename` does not exist an empty string is returned.
@@ -113,7 +180,13 @@ Example
                         std.log("cookie1 value is: " + cookie.get("cookie1"));
                 }
 
-$Function STRING get_string(PRIV_TASK)
+.. _func_get_string:
+
+STRING get_string(PRIV_TASK)
+----------------------------
+
+Prototype
+	STRING get_string(PRIV_TASK)
 
 Description
         Get a Cookie string value with all cookies in internal vmod storage. Does
@@ -127,7 +200,13 @@ Example
                         set req.http.cookie = cookie.get_string();
                 }
 
-$Function BOOL isset(PRIV_TASK, STRING cookiename)
+.. _func_isset:
+
+BOOL isset(PRIV_TASK, STRING)
+-----------------------------
+
+Prototype
+	BOOL isset(PRIV_TASK, STRING cookiename)
 
 Description
         Check if `cookiename` is set in the internal vmod storage.
@@ -143,7 +222,13 @@ Example
                         }
                 }
 
-$Function VOID parse(PRIV_TASK, STRING cookieheader)
+.. _func_parse:
+
+VOID parse(PRIV_TASK, STRING)
+-----------------------------
+
+Prototype
+	VOID parse(PRIV_TASK, STRING cookieheader)
 
 Description
         Parse the cookie string in `cookieheader`. If state already exists, clean() will be run first.
@@ -156,7 +241,13 @@ Example
 
 
 
-$Function VOID set(PRIV_TASK, STRING cookiename, STRING value)
+.. _func_set:
+
+VOID set(PRIV_TASK, STRING, STRING)
+-----------------------------------
+
+Prototype
+	VOID set(PRIV_TASK, STRING cookiename, STRING value)
 
 Description
         Set the internal vmod storage for `cookiename` to `value`.
