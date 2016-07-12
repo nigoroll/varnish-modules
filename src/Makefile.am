@@ -72,6 +72,11 @@ vcc_xkey_if.c: vcc_xkey_if.h
 vcc_xkey_if.h: @VMODTOOL@ $(top_srcdir)/src/vmod_xkey.vcc
 	@VMODTOOL@ -w ../docs/ -o vcc_xkey_if $(top_srcdir)/src/vmod_xkey.vcc
 
+doctest:
+	for i in *.vcc; do \
+		../test-vclsnippet $$i; \
+		rst2html --halt=2 --exit-status=2 $$i 1>/dev/null; \
+	done;
 
 
 VMOD_TESTS = $(top_srcdir)/src/tests/*/*.vtc
