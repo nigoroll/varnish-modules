@@ -1,4 +1,28 @@
-$Module softpurge Soft purge vmod
+..
+.. NB:  This file is machine generated, DO NOT EDIT!
+..
+.. Edit vmod.vcc and run make instead
+..
+
+.. role:: ref(emphasis)
+
+.. _vmod_softpurge(Soft):
+
+==============
+vmod_softpurge
+==============
+
+----------
+purge vmod
+----------
+
+:Manual section: Soft
+
+SYNOPSIS
+========
+
+import softpurge [from "path"] ;
+
 DESCRIPTION
 ===========
 
@@ -45,7 +69,18 @@ Example::
 
 .. vcl-end
 
-$Function VOID softpurge()
+CONTENTS
+========
+
+* :ref:`func_softpurge`
+
+.. _func_softpurge:
+
+VOID softpurge()
+----------------
+
+Prototype
+	VOID softpurge()
 
 Performs a soft purge. Valid in vcl_hit and vcl_miss.
 
