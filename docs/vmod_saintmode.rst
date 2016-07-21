@@ -104,10 +104,11 @@ CONTENTS
 
 .. _func_blacklist:
 
-VOID blacklist(PRIV_VCL, DURATION)
-----------------------------------
+blacklist
+---------
 
-Prototype
+::
+
 	VOID blacklist(PRIV_VCL, DURATION expires)
 
 Marks the backend as sick for a specific object. Used in vcl_backend_response.
@@ -127,9 +128,12 @@ Example::
 
 .. _obj_saintmode:
 
-Object saintmode
-================
+saintmode
+---------
 
+::
+
+	new OBJ = saintmode(PRIV_VCL, BACKEND backend, INT threshold=0)
 
 Constructs a saintmode director object. The ``threshold`` argument sets
 the saintmode threshold, which is the maximum number of items that can be
@@ -145,10 +149,11 @@ Example::
 
 .. _func_saintmode.backend:
 
-BACKEND saintmode.backend()
----------------------------
+saintmode.backend
+-----------------
 
-Prototype
+::
+
 	BACKEND saintmode.backend()
 
 Used for assigning the backend from the saintmode object.
@@ -158,4 +163,5 @@ Example::
     sub vcl_backend_fetch {
         set bereq.backend = sm.backend();
     }
+
 
