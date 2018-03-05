@@ -35,9 +35,8 @@
 #include <pthread.h>
 #include <errno.h>
 
-#include "vdef.h"
-#include "vrt.h"
-#include "vcl.h"
+#include "vmod_config.h"
+
 #include "vas.h"
 #include "vtim.h"
 #include "miniobj.h"

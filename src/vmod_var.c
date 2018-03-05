@@ -26,12 +26,15 @@
  */
 
 #include "config.h"
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+
 #include <sys/socket.h>
 
-#include "cache/cache.h"
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "vmod_config.h"
+
 #include "vsa.h"
 
 #include "vcc_var_if.h"

@@ -26,18 +26,19 @@
  */
 
 #include "config.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "cache/cache.h"
-
-#include "vcc_tcp_if.h"
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/tcp.h>
 #include <netinet/in.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "vmod_config.h"
+
+#include "vcc_tcp_if.h"
 
 #ifndef TCP_CONGESTION
 #define TCP_CONGESTION	13
@@ -158,7 +159,7 @@ VCL_INT vmod_congestion_algorithm(const struct vrt_ctx *ctx, VCL_STRING new) {
  *
  * */
 
-VCL_VOID v_matchproto_(td_std_set_socket_pace)
+VCL_VOID
 vmod_set_socket_pace(const struct vrt_ctx *ctx, const long rate)
 {
 #ifndef SO_MAX_PACING_RATE

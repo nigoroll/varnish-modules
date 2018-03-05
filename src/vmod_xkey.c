@@ -27,15 +27,15 @@
  */
 
 #include "config.h"
-#include <stdlib.h>
-#include <stdio.h>
+
 #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "cache/cache.h"
-#include "vcl.h"
-#include "vsha256.h"
+#include "vmod_config.h"
 
+#include "vsha256.h"
 #include "vtree.h"
 
 #include "vcc_xkey_if.h"
@@ -461,7 +461,7 @@ xkey_cb_remove(struct objcore *objcore)
 }
 
 #if HAVE_ENUM_EXP_EVENT_E
-static void v_matchproto_(exp_callback_f)
+static void
 xkey_cb(struct worker *wrk, struct objcore *objcore,
     enum exp_event_e event, void *priv)
 {
@@ -483,7 +483,7 @@ xkey_cb(struct worker *wrk, struct objcore *objcore,
 	}
 }
 #else
-static void v_matchproto_(obj_event_f)
+static void
 xkey_cb(struct worker *wrk, void *priv, struct objcore *oc, unsigned ev)
 {
 
@@ -577,19 +577,19 @@ purge(VRT_CTX, VCL_STRING key, VCL_INT do_soft)
 	return (i);
 }
 
-VCL_INT v_matchproto_(td_xkey_purge)
+VCL_INT
 vmod_purge(VRT_CTX, VCL_STRING key)
 {
 	return (purge(ctx, key, 0));
 }
 
-VCL_INT v_matchproto_(td_xkey_softpurge)
+VCL_INT
 vmod_softpurge(VRT_CTX, VCL_STRING key)
 {
 	return (purge(ctx, key, 1));
 }
 
-int v_matchproto_(vmod_event_f)
+int
 vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 {
 	(void)ctx;

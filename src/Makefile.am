@@ -168,6 +168,7 @@ endif
 
 EXTRA_DIST = \
 	foreign \
+	vmod_config.h \
 	vtree.h \
 	$(VMOD_TESTS) \
 	$(SOFTPURGE_TESTS) \

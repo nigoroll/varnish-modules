@@ -34,9 +34,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "cache/cache.h"
-#include "vsb.h"
+#include "vmod_config.h"
+
 #include "vqueue.h"
+#include "vsb.h"
 
 #include "vcc_cookie_if.h"
 
