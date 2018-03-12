@@ -35,7 +35,7 @@
  * deal if VMODs without an event callback over-include one header.
  */
 
-#include <cache/cache.h>
+#include <cache/cache_varnishd.h>
 #include <vcl.h>
 
 #ifndef VRT_H_INCLUDED

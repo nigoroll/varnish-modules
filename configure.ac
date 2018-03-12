@@ -45,6 +45,19 @@ VARNISH_VMODS([
 AS_VERSION_COMPARE([$VARNISH_VERSION], [5.0], [VARNISH_VMODS([softpurge])])
 AM_CONDITIONAL([WITH_VMOD_SOFTPURGE], [test -n "$BUILD_VMOD_SOFTPURGE"])
 
+if test "x$VARNISHSRC" = "x"; then
+	AC_MSG_FAILURE([Varnish trunk / varnish 6 needs VARNISHSRC])
+else
+	VARNISHSRC=`cd $VARNISHSRC && pwd`
+	AC_CHECK_FILE([$VARNISHSRC/bin/varnishd/cache/cache_varnishd.h],[
+		VMOD_INCLUDES="$VMOD_INCLUDES -I$VARNISHSRC/bin/varnishd"
+		AC_SUBST([VMOD_INCLUDES])
+	],[
+		AC_MSG_FAILURE(
+[Could not find $VARNISHSRC/bin/varnishd/cache/cache_varnishd.h])
+	])
+fi
+
 save_CFLAGS="$CFLAGS"
 CFLAGS="$VARNISHAPI_CFLAGS"
 AC_CHECK_MEMBER(struct objcore.exp,

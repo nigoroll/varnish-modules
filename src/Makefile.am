@@ -1,4 +1,6 @@
-AM_CFLAGS = $(VARNISHAPI_CFLAGS) $(CODE_COVERAGE_CFLAGS) -I$(top_srcdir)/src/foreign \
+AM_CFLAGS = $(VARNISHAPI_CFLAGS) $(CODE_COVERAGE_CFLAGS) \
+	-I$(top_srcdir)/src/foreign \
+	@VMOD_INCLUDES@ \
 	-Wall \
 	-Werror \
 	-Wall \
