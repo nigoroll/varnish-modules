@@ -350,6 +350,7 @@ vmod_saintmode__init(VRT_CTX, struct vmod_saintmode_saintmode **smp,
 	sm->n_trouble = 0;
 	AZ(pthread_mutex_init(&sm->mtx, NULL));
 	CHECK_OBJ_NOTNULL(be, DIRECTOR_MAGIC);
+	// XXX RefDirector
 	sm->be = be;
 	VTAILQ_INIT(&sm->troublelist);
 
@@ -377,13 +378,15 @@ vmod_saintmode__fini(struct vmod_saintmode_saintmode **smp) {
 	sm = *smp;
 	*smp = NULL;
 
+	// XXX UnrefDirector sm->be, move to destroy callback
+
 	VTAILQ_FOREACH_SAFE(tr, &sm->troublelist, list, tr2) {
 		CHECK_OBJ_NOTNULL(tr, TROUBLE_MAGIC);
 		VTAILQ_REMOVE(&sm->troublelist, tr, list);
 		FREE_OBJ(tr);
 	}
 
-	VRT_DelDirector(&sm->sdir);
+	VRT_DelDirector(NULL, &sm->sdir);
 	AZ(pthread_mutex_destroy(&sm->mtx));
 
 	/* We can no longer refer to the sm_objs after this
