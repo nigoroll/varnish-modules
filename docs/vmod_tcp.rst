@@ -21,7 +21,20 @@ TCP vmod
 SYNOPSIS
 ========
 
-import tcp [from "path"] ;
+
+::
+
+   import tcp [from "path"] ;
+   
+   INT congestion_algorithm(STRING algorithm)
+  
+   VOID dump_info()
+  
+   REAL get_estimated_rtt()
+  
+   VOID set_socket_pace(INT)
+  
+
 
 DESCRIPTION
 ===========
@@ -58,7 +71,6 @@ Example::
 
 .. vcl-end
 
-
 CONTENTS
 ========
 
@@ -67,14 +79,15 @@ CONTENTS
 * :ref:`func_get_estimated_rtt`
 * :ref:`func_set_socket_pace`
 
+
+
+
+
+
 .. _func_congestion_algorithm:
 
-congestion_algorithm
---------------------
-
-::
-
-	INT congestion_algorithm(STRING algorithm)
+INT congestion_algorithm(STRING algorithm)
+------------------------------------------
 
 Set the client socket congestion control algorithm to S. Returns 0 on success, and -1 on error.
 
@@ -87,12 +100,8 @@ Example::
 
 .. _func_dump_info:
 
-dump_info
----------
-
-::
-
-	VOID dump_info()
+VOID dump_info()
+----------------
 
 Write the contents of the TCP_INFO data structure into varnishlog.
 
@@ -108,16 +117,10 @@ Example varnishlog output::
         -   VCL_Log        getsockopt() returned: cubic
 
 
-
-
 .. _func_get_estimated_rtt:
 
-get_estimated_rtt
------------------
-
-::
-
-	REAL get_estimated_rtt()
+REAL get_estimated_rtt()
+------------------------
 
 Get the estimated round-trip-time for the client socket. Unit: milliseconds.
 
@@ -130,12 +133,8 @@ Example::
 
 .. _func_set_socket_pace:
 
-set_socket_pace
----------------
-
-::
-
-	VOID set_socket_pace(INT)
+VOID set_socket_pace(INT)
+-------------------------
 
 Set socket pacing on client-side TCP connection to PACE KB/s. Network interface
 used must be using a supported scheduler. (fq)

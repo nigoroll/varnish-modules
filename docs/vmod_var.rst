@@ -21,7 +21,45 @@ Variable support for Varnish VCL
 SYNOPSIS
 ========
 
-import var [from "path"] ;
+
+::
+
+   import var [from "path"] ;
+   
+   VOID set(STRING key, STRING value)
+  
+   STRING get(STRING)
+  
+   VOID global_set(STRING, STRING)
+  
+   STRING global_get(STRING)
+  
+   VOID set_int(STRING key, INT value)
+  
+   INT get_int(STRING key)
+  
+   VOID set_string(STRING key, STRING value)
+  
+   STRING get_string(STRING key)
+  
+   VOID set_real(STRING key, REAL value)
+  
+   REAL get_real(STRING key)
+  
+   VOID set_duration(STRING key, DURATION value)
+  
+   DURATION get_duration(STRING key)
+  
+   VOID set_ip(STRING key, IP value)
+  
+   IP get_ip(STRING key)
+  
+   VOID set_backend(STRING key, BACKEND value)
+  
+   BACKEND get_backend(STRING key)
+  
+   VOID clear()
+  
 
 
 This VMOD implements basic variable support in VCL.
@@ -81,12 +119,12 @@ Example::
 
 .. vcl-end
 
-
 CONTENTS
 ========
 
 * :ref:`func_clear`
 * :ref:`func_get`
+* :ref:`func_get_backend`
 * :ref:`func_get_duration`
 * :ref:`func_get_int`
 * :ref:`func_get_ip`
@@ -95,170 +133,152 @@ CONTENTS
 * :ref:`func_global_get`
 * :ref:`func_global_set`
 * :ref:`func_set`
+* :ref:`func_set_backend`
 * :ref:`func_set_duration`
 * :ref:`func_set_int`
 * :ref:`func_set_ip`
 * :ref:`func_set_real`
 * :ref:`func_set_string`
 
+
+
+
+
+
 .. _func_set:
 
-set
----
-
-::
-
-	VOID set(PRIV_TASK, STRING key, STRING value)
+VOID set(STRING key, STRING value)
+----------------------------------
 
 Set `key` to `value`.
+
 
 .. _func_get:
 
-get
----
-
-::
-
-	STRING get(PRIV_TASK, STRING)
+STRING get(STRING)
+------------------
 
 Get `key` with data type STRING. If stored `key` is not a STRING an empty string is returned.
 
+
 .. _func_global_set:
 
-global_set
-----------
+VOID global_set(STRING, STRING)
+-------------------------------
 
-::
 
-	VOID global_set(STRING, STRING)
+
 
 .. _func_global_get:
 
-global_get
-----------
+STRING global_get(STRING)
+-------------------------
 
-::
 
-	STRING global_get(STRING)
+
 
 .. _func_set_int:
 
-set_int
--------
-
-::
-
-	VOID set_int(PRIV_TASK, STRING key, INT value)
+VOID set_int(STRING key, INT value)
+-----------------------------------
 
 Set `key` to `value`.
+
 
 .. _func_get_int:
 
-get_int
--------
-
-::
-
-	INT get_int(PRIV_TASK, STRING key)
+INT get_int(STRING key)
+-----------------------
 
 Get `key` with data type INT. If stored `key` is not an INT zero will be returned.
 
+
 .. _func_set_string:
 
-set_string
-----------
-
-::
-
-	VOID set_string(PRIV_TASK, STRING key, STRING value)
+VOID set_string(STRING key, STRING value)
+-----------------------------------------
 
 Identical to set().
 
+
 .. _func_get_string:
 
-get_string
-----------
-
-::
-
-	STRING get_string(PRIV_TASK, STRING key)
+STRING get_string(STRING key)
+-----------------------------
 
 Identical to get().
 
+
 .. _func_set_real:
 
-set_real
---------
-
-::
-
-	VOID set_real(PRIV_TASK, STRING key, REAL value)
+VOID set_real(STRING key, REAL value)
+-------------------------------------
 
 Set `key` to `value`.
+
 
 .. _func_get_real:
 
-get_real
---------
-
-::
-
-	REAL get_real(PRIV_TASK, STRING key)
+REAL get_real(STRING key)
+-------------------------
 
 Get `key` with data type REAL. If stored `key` is not a REAL zero will be returned.
 
+
 .. _func_set_duration:
 
-set_duration
-------------
-
-::
-
-	VOID set_duration(PRIV_TASK, STRING key, DURATION value)
+VOID set_duration(STRING key, DURATION value)
+---------------------------------------------
 
 Set `key` to `value`.
+
 
 .. _func_get_duration:
 
-get_duration
-------------
-
-::
-
-	DURATION get_duration(PRIV_TASK, STRING key)
+DURATION get_duration(STRING key)
+---------------------------------
 
 Get `key` with data type DURATION. If stored `key` is not a DURATION zero will be returned.
 
+
 .. _func_set_ip:
 
-set_ip
-------
-
-::
-
-	VOID set_ip(PRIV_TASK, STRING key, IP value)
+VOID set_ip(STRING key, IP value)
+---------------------------------
 
 Set `key` to `value`.
 
+
 .. _func_get_ip:
 
-get_ip
-------
-
-::
-
-	IP get_ip(PRIV_TASK, STRING key)
+IP get_ip(STRING key)
+---------------------
 
 Get `key` with data type IP. If stored `key` is not an IP null will be returned.
 
+
+.. _func_set_backend:
+
+VOID set_backend(STRING key, BACKEND value)
+-------------------------------------------
+
+Set `key` to `value`.
+
+
+.. _func_get_backend:
+
+BACKEND get_backend(STRING key)
+-------------------------------
+
+Get `key` with data type BACKEND. If stored `key` is not a BACKEND,
+null will be returned.
+
+
 .. _func_clear:
 
-clear
------
-
-::
-
-	VOID clear(PRIV_TASK)
+VOID clear()
+------------
 
 Clear all non-global variables.
+
 

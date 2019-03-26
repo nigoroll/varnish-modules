@@ -21,7 +21,23 @@ Saint mode backend director
 SYNOPSIS
 ========
 
-import saintmode [from "path"] ;
+
+::
+
+   import saintmode [from "path"] ;
+   
+   VOID blacklist(DURATION expires)
+  
+   STRING status()
+  
+   new xsaintmode = saintmode.saintmode(BACKEND backend, INT threshold)
+  
+      BACKEND xsaintmode.backend()
+  
+      INT xsaintmode.blacklist_count()
+  
+      BOOL xsaintmode.is_healthy()
+  
 
 
 DESCRIPTION
@@ -94,7 +110,6 @@ Example::
 
 .. vcl-end
 
-
 CONTENTS
 ========
 
@@ -102,16 +117,18 @@ CONTENTS
 * :ref:`obj_saintmode`
 * :ref:`func_saintmode.backend`
 * :ref:`func_saintmode.blacklist_count`
+* :ref:`func_saintmode.is_healthy`
 * :ref:`func_status`
+
+
+
+
+
 
 .. _func_blacklist:
 
-blacklist
----------
-
-::
-
-	VOID blacklist(PRIV_VCL, DURATION expires)
+VOID blacklist(DURATION expires)
+--------------------------------
 
 Marks the backend as sick for a specific object. Used in vcl_backend_response.
 Corresponds to the use of ``beresp.saintmode`` in Varnish 3.0. Only available
@@ -129,12 +146,8 @@ Example::
 
 .. _func_status:
 
-status
-------
-
-::
-
-	STRING status(PRIV_VCL)
+STRING status()
+---------------
 
 Returns a JSON formatted status string suitable for use in vcl_synth.
 
@@ -167,19 +180,20 @@ Example JSON output:
 
 .. _obj_saintmode:
 
-saintmode
----------
+saintmode(...)
+--------------
 
 ::
 
-	new OBJ = saintmode(PRIV_VCL, BACKEND backend, INT threshold)
+   new xsaintmode = saintmode.saintmode(
+      BACKEND backend,
+      INT threshold
+   )
 
 Constructs a saintmode director object. The ``threshold`` argument sets
 the saintmode threshold, which is the maximum number of items that can be
 blacklisted before the whole backend is regarded as sick. Corresponds with the
 ``saintmode_threshold`` parameter of Varnish 3.0.
-
-Setting threshold to 0 disables saintmode, not the threshold.
 
 Example::
 
@@ -187,15 +201,10 @@ Example::
         new sm = saintmode.saintmode(b, 10);
     }
 
-
 .. _func_saintmode.backend:
 
-saintmode.backend
------------------
-
-::
-
-	BACKEND saintmode.backend()
+BACKEND xsaintmode.backend()
+----------------------------
 
 Used for assigning the backend from the saintmode object.
 
@@ -208,12 +217,8 @@ Example::
 
 .. _func_saintmode.blacklist_count:
 
-saintmode.blacklist_count
--------------------------
-
-::
-
-	INT saintmode.blacklist_count()
+INT xsaintmode.blacklist_count()
+--------------------------------
 
 Returns the number of objects currently blacklisted for a saintmode
 director object.
@@ -225,4 +230,18 @@ Example:
    sub vcl_deliver {
        set resp.http.troublecount = sm.blacklist_count();
    }
+
+
+.. _func_saintmode.is_healthy:
+
+BOOL xsaintmode.is_healthy()
+----------------------------
+
+Checks if the object is currently blacklisted for a saintmode director object.
+If there are no valid objects available (called from vcl_hit or vcl_recv),
+the function will fall back to the backend's health function.
+
+
+
+
 

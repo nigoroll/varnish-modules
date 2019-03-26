@@ -21,7 +21,16 @@ Surrogate keys support for Varnish Cache
 SYNOPSIS
 ========
 
-import xkey [from "path"] ;
+
+::
+
+   import xkey [from "path"] ;
+   
+   INT purge(STRING keys)
+  
+   INT softpurge(STRING keys)
+  
+
 
 DESCRIPTION
 ===========
@@ -39,13 +48,13 @@ Similarly with an e-commerce site, where various SKUs are often
 referenced on a page.
 
 Hash keys are specified in the ``xkey`` response header. Multiple keys
-can be specified per header line with a space
-separator. Alternatively, they can be specified in multiple ``xkey``
+can be specified per header line with spaces and/or commas as
+separators. Alternatively, they can be specified in multiple ``xkey``
 response headers.
 
 Preferably the secondary hash keys are set from the backend
-application, but can also be set from VCL in ``vcl_backend_response``
-as in the above example.
+application, but the header can also be set from VCL in
+``vcl_backend_response``.
 
 .. vcl-start
 
@@ -65,10 +74,14 @@ VCL example::
             if (client.ip !~ purgers) {
                 return (synth(403, "Forbidden"));
             }
-            set req.http.n-gone = xkey.purge(req.http.xkey-purge);
-            # or: set req.http.n-gone = xkey.softpurge(req.http.xkey-purge)
+	    if (req.http.xkey) {
+		set req.http.n-gone = xkey.purge(req.http.xkey);
+		# or: set req.http.n-gone = xkey.softpurge(req.http.xkey)
 
-            return (synth(200, "Invalidated "+req.http.n-gone+" objects"));
+		return (synth(200, "Invalidated "+req.http.n-gone+" objects"));
+	    } else {
+		return (purge);
+	    }
         }
     }
 
@@ -88,9 +101,6 @@ header for a certain page might look like this::
     xkey: 166412
     xkey: 234323
 
-Alternatively you may instead use a single header with space separated
-values like ``xkey: 8155054 166412 234323``.
-
 This requires a bit of VCL to be in place. The VCL can be found above.
 
 Then, in order to keep the web in sync with the database, a trigger is
@@ -98,16 +108,9 @@ set up in the database. When an SKU is updated this will trigger an
 HTTP request towards the Varnish server, clearing out every object
 with the matching xkey header::
 
-    PURGE / HTTP/1.1
+    GET / HTTP/1.1
     Host: www.example.com
     xkey-purge: 166412
-
-Several ``xkey-purge`` headers are also supported like in the response
-example above, and you may also here use a single header with space
-seperated values like ``xkey-purge: 166412 234323``.
-
-Unlike `xkey` header for responses, purge header is fully configurable
-by means of adjusting the name of the header in the VCL example above. 
 
 Note the xkey-purge header. It is probably a good idea to protect
 this with an ACL so random people from the Internet cannot purge your
@@ -128,14 +131,15 @@ CONTENTS
 * :ref:`func_purge`
 * :ref:`func_softpurge`
 
+
+
+
+
+
 .. _func_purge:
 
-purge
------
-
-::
-
-	INT purge(STRING keys)
+INT purge(STRING keys)
+----------------------
 
 Description
         Purges all objects hashed on any key found in the ``keys`` argument.
@@ -146,12 +150,8 @@ Description
 
 .. _func_softpurge:
 
-softpurge
----------
-
-::
-
-	INT softpurge(STRING keys)
+INT softpurge(STRING keys)
+--------------------------
 
 Description
         Performs a "soft purge" for all objects hashed on any key found in the

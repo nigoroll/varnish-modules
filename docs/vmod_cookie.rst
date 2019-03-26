@@ -21,7 +21,32 @@ Varnish Cookie Module
 SYNOPSIS
 ========
 
-import cookie [from "path"] ;
+
+::
+
+   import cookie [from "path"] ;
+   
+   VOID clean()
+  
+   VOID delete(STRING cookiename)
+  
+   VOID filter(STRING filterstring)
+  
+   VOID filter_except(STRING filterstring)
+  
+   STRING format_rfc1123(TIME now, DURATION timedelta)
+  
+   STRING get(STRING cookiename)
+  
+   STRING get_string()
+  
+   BOOL isset(STRING cookiename)
+  
+   VOID parse(STRING cookieheader)
+  
+   VOID set(STRING cookiename, STRING value)
+  
+
 
 DESCRIPTION
 ===========
@@ -34,8 +59,8 @@ but a set comma-separated list of cookies. A filter() method removes a comma-
 separated list of cookies.
 
 A convenience function for formatting the Set-Cookie Expires date field
-is also included. To actually manipulate the Set-Cookie response headers,
-vmod-header should be used instead though.
+is also included. If there are multiple Set-Cookie headers vmod-header
+should be used.
 
 The state loaded with cookie.parse() has a lifetime of the current request
 or backend request context. To pass variables to the backend request, store
@@ -85,14 +110,15 @@ CONTENTS
 * :ref:`func_parse`
 * :ref:`func_set`
 
+
+
+
+
+
 .. _func_clean:
 
-clean
------
-
-::
-
-	VOID clean(PRIV_TASK)
+VOID clean()
+------------
 
 Description
         Clean up previously parsed cookies. It is not necessary to run clean()
@@ -104,14 +130,11 @@ Example
                         cookie.clean();
                 }
 
+
 .. _func_delete:
 
-delete
-------
-
-::
-
-	VOID delete(PRIV_TASK, STRING cookiename)
+VOID delete(STRING cookiename)
+------------------------------
 
 Description
         Delete `cookiename` from internal vmod storage if it exists.
@@ -125,14 +148,11 @@ Example
 		    // get_string() will now yield "cookie1: value1";
 		}
 
+
 .. _func_filter:
 
-filter
-------
-
-::
-
-	VOID filter(PRIV_TASK, STRING filterstring)
+VOID filter(STRING filterstring)
+--------------------------------
 
 Description
         Delete all cookies from internal vmod storage that are in the
@@ -148,14 +168,11 @@ Example
                         // "cookie3: value3";
                 }
 
+
 .. _func_filter_except:
 
-filter_except
--------------
-
-::
-
-	VOID filter_except(PRIV_TASK, STRING filterstring)
+VOID filter_except(STRING filterstring)
+---------------------------------------
 
 Description
         Delete all cookies from internal vmod storage that is not in the
@@ -170,14 +187,11 @@ Example
                         // "cookie1: value1; cookie2: value2;";
                 }
 
+
 .. _func_format_rfc1123:
 
-format_rfc1123
---------------
-
-::
-
-	STRING format_rfc1123(TIME now, DURATION timedelta)
+STRING format_rfc1123(TIME now, DURATION timedelta)
+---------------------------------------------------
 
 Description
         Get a RFC1123 formatted date string suitable for inclusion in a
@@ -193,14 +207,11 @@ Example
                         set resp.http.Set-Cookie = "userid=" + req.http.userid + "; Expires=" + cookie.format_rfc1123(now, 5m) + "; httpOnly";
                 }
 
+
 .. _func_get:
 
-get
----
-
-::
-
-	STRING get(PRIV_TASK, STRING cookiename)
+STRING get(STRING cookiename)
+-----------------------------
 
 Description
         Get the value of `cookiename`, as stored in internal vmod storage. If `cookiename` does not exist an empty string is returned.
@@ -213,14 +224,11 @@ Example
                         std.log("cookie1 value is: " + cookie.get("cookie1"));
                 }
 
+
 .. _func_get_string:
 
-get_string
-----------
-
-::
-
-	STRING get_string(PRIV_TASK)
+STRING get_string()
+-------------------
 
 Description
         Get a Cookie string value with all cookies in internal vmod storage. Does
@@ -234,14 +242,11 @@ Example
                         set req.http.cookie = cookie.get_string();
                 }
 
+
 .. _func_isset:
 
-isset
------
-
-::
-
-	BOOL isset(PRIV_TASK, STRING cookiename)
+BOOL isset(STRING cookiename)
+-----------------------------
 
 Description
         Check if `cookiename` is set in the internal vmod storage.
@@ -257,14 +262,11 @@ Example
                         }
                 }
 
+
 .. _func_parse:
 
-parse
------
-
-::
-
-	VOID parse(PRIV_TASK, STRING cookieheader)
+VOID parse(STRING cookieheader)
+-------------------------------
 
 Description
         Parse the cookie string in `cookieheader`. If state already exists, clean() will be run first.
@@ -276,15 +278,10 @@ Example
                 }
 
 
-
 .. _func_set:
 
-set
----
-
-::
-
-	VOID set(PRIV_TASK, STRING cookiename, STRING value)
+VOID set(STRING cookiename, STRING value)
+-----------------------------------------
 
 Description
         Set the internal vmod storage for `cookiename` to `value`.
