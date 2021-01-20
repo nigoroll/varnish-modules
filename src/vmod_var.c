@@ -119,8 +119,9 @@ vh_get_var_alloc(struct var_head *vh, const char *name, const struct vrt_ctx *ct
 }
 
 static void
-free_func(void *p)
+free_func(VRT_CTX, void *p)
 {
+	(void) ctx;
 	struct var_head *vh;
 
 	CAST_OBJ_NOTNULL(vh, p, VAR_HEAD_MAGIC);

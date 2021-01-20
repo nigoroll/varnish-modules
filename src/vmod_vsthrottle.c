@@ -304,8 +304,9 @@ vmod_blocked(VRT_CTX, VCL_STRING key, VCL_INT limit, VCL_DURATION period,
 }
 
 static void
-fini(void *priv)
+fini(VRT_CTX, void *priv)
 {
+	(void) ctx;
 	assert(priv == &n_init);
 
 	AZ(pthread_mutex_lock(&init_mtx));

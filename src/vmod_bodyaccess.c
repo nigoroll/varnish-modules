@@ -183,10 +183,17 @@ vmod_len_req_body(VRT_CTX)
 	return ((VCL_INT)u);
 }
 
+static void
+free_func(VRT_CTX, void *p)
+{
+	(void)ctx;
+	free(p);
+}
+
 static const struct vmod_priv_methods priv_call_methods[1] = {{
 		.magic = VMOD_PRIV_METHODS_MAGIC,
 		.type = "vmod_bodyaccess_rematch_priv_call",
-		.fini = free
+		.fini = free_func
 }};
 
 VCL_INT
