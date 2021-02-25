@@ -131,8 +131,10 @@ vmod_hash_req_body(VRT_CTX)
 {
 	struct vsb *vsb;
 	txt txtbody;
+	struct VSHA256Context sha256ctx;
 
 	CHECK_OBJ_NOTNULL(ctx, VRT_CTX_MAGIC);
+	AZ(ctx->specific);
 
 	if (ctx->req->req_body_status != BS_CACHED) {
 		VSLb(ctx->vsl, SLT_VCL_Error,
@@ -146,13 +148,17 @@ vmod_hash_req_body(VRT_CTX)
 		return;
 	}
 
+	VSHA256_Init(&sha256ctx);
+	VSHA256_Update(&sha256ctx, ctx->req->digest, sizeof ctx->req->digest);
+
 	vsb = VSB_new_auto();
 	AN(vsb);
 
 	bodyaccess_bcat(ctx, vsb);
 	txtbody.b = VSB_data(vsb);
 	txtbody.e = txtbody.b + VSB_len(vsb);
-	SHA256_Update(ctx->specific, txtbody.b, txtbody.e - txtbody.b);
+	SHA256_Update(&sha256ctx, txtbody.b, txtbody.e - txtbody.b);
+	VSHA256_Final(ctx->req->digest, &sha256ctx);
 	VSLbt(ctx->vsl, SLT_Hash, txtbody);
 	VSB_destroy(&vsb);
 }
