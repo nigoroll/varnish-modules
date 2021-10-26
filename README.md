@@ -55,7 +55,6 @@ make install  # optional (installation), run as root
 
 A [Dockerfile](Dockerfile) is available as example.
 
->>>>>>> f086446116ab5d86927a85ab05409bf32110ab6a
 ## Usage
 
 Each module has a different set of functions and usage, described in
