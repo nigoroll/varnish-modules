@@ -570,7 +570,6 @@ vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 
 	switch (e) {
 	case VCL_EVENT_LOAD:
-		AZ(pthread_mutex_lock(&mtx));
 		if (n_init == 0) {
 			xkey_cb_handle = ObjSubscribeEvents(xkey_cb, NULL,
 			    OEV_INSERT|OEV_EXPIRE);
@@ -582,10 +581,8 @@ vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 		}
 		AN(xkey_cb_handle);
 		n_init++;
-		AZ(pthread_mutex_unlock(&mtx));
 		break;
 	case VCL_EVENT_DISCARD:
-		AZ(pthread_mutex_lock(&mtx));
 		assert(n_init > 0);
 		n_init--;
 		AN(xkey_cb_handle);
@@ -593,11 +590,12 @@ vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 			/* Do cleanup */
 			ObjUnsubscribeEvents(&xkey_cb_handle);
 			AZ(xkey_cb_handle);
+			AZ(pthread_mutex_lock(&mtx));
 			xkey_cleanup();
+			AZ(pthread_mutex_unlock(&mtx));
 			VSC_xkey_Destroy(&vsc_seg);
 			vsc = NULL;
 		}
-		AZ(pthread_mutex_unlock(&mtx));
 		break;
 	default:
 		break;
