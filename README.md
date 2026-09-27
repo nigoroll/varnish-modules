@@ -2,7 +2,7 @@
 
 This repository is based upon
 https://github.com/varnish/varnish-modules with additions and
-necessary adjustments for varnish-cache master. It is being maintained
+necessary adjustments for Vinyl Cache main. It is being maintained
 by https://uplex.de/
 
 Included:

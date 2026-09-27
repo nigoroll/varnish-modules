@@ -29,6 +29,7 @@ stamp-h1
 # vmodtool
 vcc_*_if.[ch]
 vmod_*.rst
+src/vmod_vcs_version.txt
 
 # vsctool
 VSC_*.[ch]
