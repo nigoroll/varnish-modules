@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cache/cache_varnishd.h>
+#include <cache/cache_int.h>
 
 #include "vsha256.h"
 #include "vtree.h"
@@ -568,6 +568,7 @@ vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 	(void)ctx;
 	(void)priv;
 
+	/* vmod_event() runs only on the CLI thread; n_init needs no lock. */
 	switch (e) {
 	case VCL_EVENT_LOAD:
 		if (n_init == 0) {
@@ -587,7 +588,8 @@ vmod_event(VRT_CTX, struct vmod_priv *priv, enum vcl_event_e e)
 		n_init--;
 		AN(xkey_cb_handle);
 		if (n_init == 0) {
-			/* Do cleanup */
+			/* Unsubscribe outside mtx: it drains xkey_cb()
+			 * callbacks that take mtx. */
 			ObjUnsubscribeEvents(&xkey_cb_handle);
 			AZ(xkey_cb_handle);
 			AZ(pthread_mutex_lock(&mtx));
